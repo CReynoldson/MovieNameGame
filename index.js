@@ -35,7 +35,7 @@ app.post("/play-turn", (req, res) => {
       message = `${currentPlayer} played ${req.body['actor']} in ${req.body['movie']} and got a point! Hurray for you.`
       console.log(game.totalScore, game.toString(), game.moviesPlayed, game.actorsPlayed)
     } else if (results === "failure") {
-      message = "Incoreect movie / actor pairing"
+      message = "Incorrect movie / actor pairing"
     } else {
       message = results
     }

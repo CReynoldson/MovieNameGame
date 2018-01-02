@@ -5,20 +5,12 @@ const fetch = require("node-fetch")
 const envVars = require("../config.json")
 const TMDBAuth = envVars["TMDB"]
 
-function TMDB() {
-  this.auth = TMDBAuth
-  // this.baseMovieSearchURL = `https://api.themoviedb.org/3/search/movie?api_key=${this.auth}&query=${}`
-  // this.basePersonSearchURL = `https://api.themoviedb.org/3/search/person?api_key=${this.auth}&query=${personName}`
-  // this.baseMovieDetailsURL = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${this.auth}`
-  // this.baseMovieCastListURL = `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${this.auth}`
-  // this.basePersonDetailsURL = `https://api.themoviedb.org/3/person/${personID}?api_key=${this.auth}`
-}
 
-TMDB.prototype.buildOptions = function (uri, queryString) {
+function buildOptions(uri, queryString) {
   let options = {
       uri: uri,
       qs: {
-        api_key: this.auth,
+        api_key: TMDBAuth,
         query: queryString
       },
       headers: {
@@ -30,37 +22,68 @@ TMDB.prototype.buildOptions = function (uri, queryString) {
 }
 
 
-TMDB.prototype.buildMovieSearchURL = function (movieName) {
-  return `https://api.themoviedb.org/3/search/movie?api_key=${this.auth}&query=${movieName}`
+function buildSearchURL(type, name) {
+  return `https://api.themoviedb.org/3/search/${type}?api_key=${TMDBAuth}&query=${name}`
 }
 
-TMDB.prototype.searchForMovie = (movieName, ) => new Promise((resolve, reject) => {
-  console.log('GOT TO SEARCHING FOR MOVIE IN FIRST CALLBACK')
-  let searchURL = TMDB.buildMovieSearchURL(movieName)
-  let options = TMDB.buildOptions(searchURL, movieName)
+function searchForMovie(movieName) {
+  return new Promise((resolve, reject) => {
+  let searchURL = buildSearchURL('movie', movieName)
+  let options = buildOptions(searchURL, movieName)
   let movieID = rp(options)
     .then(function (movieList) {
-        console.log('RESULTS', movieList[0]['id']);
-        return movieList['results'].length > 0 ? movieList['results'][0]['id'] : "Movie could not be located"
+        resolve(movieList['results'].length > 0 ? movieList['results'][0]['id'] : "Movie could not be located")
     })
     .catch(function (err) {
-      console.log('ERROR', err)
       throw (err)
-    });
+      reject("query didn't work")
+    })
   })
-
-TMDB.prototype.searchForActor = function (name) {
-
 }
 
-// TMDB.prototype.getMovieCastList = function (movieID) {
-  // request.get(`https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${this.auth}`, function (err, response, body) {
-
-//   })
-// }
-
-TMDB.prototype.actorIsInCastList = function (actorID, castList) {
-
+function searchForActor(actorName) {
+  return new Promise((resolve, reject) => {
+    let searchURL = buildSearchURL("person", actorName)
+    let options = buildOptions(searchURL, actorName)
+    let actorID = rp(options)
+      .then((actorList) => {
+        resolve(actorList['results'].length > 0 ? actorList['results'][0] : "Could not find actor")
+      })
+      .catch((err) => {
+        throw (err)
+        reject("couldn't find the actor you were looking for")
+      })
+  })
 }
 
-module.exports = new TMDB()
+function getMovieCastList(movieID) {
+  return new Promise((resolve, reject) => {
+    let movieDetailsURL = `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${TMDBAuth}`
+    let options = buildOptions(movieDetailsURL, "")
+    let cast = rp(options)
+      .then((credits) => {
+        resolve(credits['cast'])
+      })
+      .catch((err) => {
+        console.log(err)
+        reject("Couldn't get the cast list")
+      })
+  })
+}
+
+function actorIsInCastList(actorID, movieID) {
+  return new Promise((resolve, reject) => {
+    let castList = getMovieCastList(movieID)
+      .then((castList) => {
+        let castIDs = castList.map(actor => actor['id'])
+        resolve(castIDs.includes(actorID))
+      })
+      .catch((err) => {
+        console.log(err)
+        reject("Couldn't check the cast list properly oh dear")
+      })
+  })
+}
+
+module.exports = {searchForMovie, searchForActor, actorIsInCastList}
+

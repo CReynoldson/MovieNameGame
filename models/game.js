@@ -1,32 +1,5 @@
-const {searchForMovie, searchForActor, actorIsInCastList} = require("../api/tmdb2.js")
+const {searchForMovie, searchForActor, actorIsInCastList} = require("../api/tmdb.js")
 const Player = require("./player.js")
-// import {searchForMovie} from ("../api/tmdb2.js")
-
-// class Game {
-//   constructor(playerOne, playerTwo, difficulty) {
-//     this.playerOne = new Player(playerOne)
-//     this.playerTwo = new Player(playerTwo)
-//     this.name = `${PlayerOne.name} vs ${PlayerTwo.name}`
-//     this.difficulty = difficulty
-//     this.totalScore = 0
-//     this.moviesPlayed = []
-//     this.actorsPlayed = []
-//   }
-
-//   toString () {
-//     return `${this.name} - Score = ${this.playerOne.score} : ${this.playerTwo.score} `
-//   }
-
-//   playRound (movieName, actorName) {
-//     movie = TMDB.searchForMovie(movieName)
-//     actor = TMDB.searchForPerson(actorName)
-//     movieID = TMDB.movieBase['results']
-//     if (TMDB.actorIsInCastList(movie, actor)) {
-//       return `Someone played ${actorName} in ${movieName}`
-//     } else {
-//       return "THAT ACTOR AIN'T IN THAT MOVIE YA HEAR"
-//     }
-//   }
 
 function Game (data) {
     this.playerOne = new Player(data['playerOne'])
