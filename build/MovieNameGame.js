@@ -293,8 +293,18 @@ var _vue2 = _interopRequireDefault(_vue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-new _vue2.default({
-  el: '.vue-app'
+var app = new _vue2.default({
+  el: '#app',
+  data: {
+    message: "NO WAYYYYYyyYYYY"
+  }
+});
+
+var app2 = new _vue2.default({
+  el: '#app-2',
+  data: {
+    message: 'You loaded this page on ' + new Date().toLocaleString()
+  }
 });
 
 /***/ }),

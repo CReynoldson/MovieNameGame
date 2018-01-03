@@ -5,8 +5,14 @@
   <title>Movie Name Game</title>
 </head>
 <body>
-  <div class="vue-app">
+  <div id="app">
+    {{ message }}
   </div>
-  <script src="build/app.js"></script>
+  <div id="app-2">
+    <span v-bind:title="message">
+      Hover your mouse over me for a few seconds to see my dynamically bound title!
+    </span>
+  </div>
+  <script src="build/MovieNameGame.js"></script>
 </body>
 </html>

@@ -13,7 +13,8 @@ const PORT = envVars["PORT"] || 8080
 let gamesInPlay = []
 
 app.get("/", (req, res) => {
-  res.send("Hello friend! :D Do you want to play a game?")
+  // res.send("Hello friend! :D Do you want to play a game?")
+  res.render('index')
 })
 
 app.post("/start-game", (req, res) => {
