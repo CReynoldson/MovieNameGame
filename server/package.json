@@ -4,6 +4,7 @@
   "description": "A trivia game for movies and actors",
   "main": "index.js",
   "scripts": {
+    "start": "./node_modules/nodemon/bin/nodemon.js src/app.js",
     "test": "npm run test",
     "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch",
     "build": "WEBPACK_ENV=production webpack"
@@ -17,12 +18,15 @@
     "css-loader": "^0.28.7",
     "express": "^4.16.2",
     "node-fetch": "^1.7.3",
+    "nodemon": "^1.14.7",
     "path": "^0.12.7",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "vue": "^2.5.13",
+    "vue-axios": "^2.0.2",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^13.6.2",
+    "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^3.10.0"
   },

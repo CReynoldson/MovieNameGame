@@ -17,8 +17,17 @@ app.get("/", (req, res) => {
   res.render('index')
 })
 
+app.get('/posts', (req, res) => {
+  console.log('SALUTATIONS')
+  res.send(
+    [{
+      title: "Hello World!",
+      description: "Hi there! How are you?"
+    }]
+  )
+})
+
 app.post("/start-game", (req, res) => {
-  console.log("REQUEST BODY", req.body)
   let currentGame = new Game(req.body)
   gamesInPlay.push({"gameId": 1, "game": currentGame})
 
