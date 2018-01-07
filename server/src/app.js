@@ -1,12 +1,15 @@
 const express = require("express")
 const bodyParser = require("body-parser")
+const cors = require('cors')
+const morgan = require('morgan')
 const envVars = require("../../config.json")
 let Game = require("../../models/game.js")
 
 
 const app = express()
-app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
+app.use(morgan('combined'))
+app.use(cors())
 
 const PORT = envVars["PORT"] || 8080
 
