@@ -15,23 +15,10 @@ const PORT = envVars["PORT"] || 8080
 
 let gamesInPlay = []
 
-// app.get("/", (req, res) => {
-//   // res.send("Hello friend! :D Do you want to play a game?")
-//   res.render('index')
-// })
-
-app.get('/posts', (req, res) => {
-  console.log('GOOD DAY TO U SIR')
-  res.send(
-    [{
-      title: "Hello World!",
-      description: "Hi there! How are you?"
-    }]
-  )
-})
-
 app.post("/start-game", (req, res) => {
-  console.log("REQUEST BODY", req.body)
+  data = req.body
+  data['playerOne'] = 'Corky'
+  data['playerTwo'] = 'My arch nemesis'
   let currentGame = new Game(req.body)
   gamesInPlay.push({"gameId": 1, "game": currentGame})
 
@@ -39,6 +26,10 @@ app.post("/start-game", (req, res) => {
 })
 
 app.post("/play-turn", (req, res) => {
+  data = req.body
+  data['playerOne'] = 'Corky'
+  data['playerTwo'] = 'My arch nemesis'
+
   let currentGame = new Game(req.body)
   gamesInPlay.push({"gameId": 1, "game": currentGame})
 
