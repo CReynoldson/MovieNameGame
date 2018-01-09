@@ -7,6 +7,17 @@
   </head>
   <body>
     <div id="app"></div>
+    <div><h1>HI</h1></div>
     <!-- built files will be auto injected -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      console.log('hi')
+      var socket = io('http://localhost');
+      socket.on('connect', function(){
+        console.log('hey howdy')
+      });
+      socket.on('event', function(data){});
+      socket.on('disconnect', function(){});
+    </script>
   </body>
 </html>

@@ -24,6 +24,7 @@
     "path": "^0.12.7",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
+    "socket.io": "^2.0.4",
     "vue": "^2.5.13",
     "vue-axios": "^2.0.2",
     "vue-html-loader": "^1.2.4",

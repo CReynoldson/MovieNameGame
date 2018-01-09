@@ -1,19 +1,39 @@
-const express = require("express")
+let app = require("express")()
+let http = require('http').Server(app)
+let io = require('socket.io')(http)
 const bodyParser = require("body-parser")
 const cors = require('cors')
 const morgan = require('morgan')
+const path = require('path')
+
 const envVars = require("../../config.json")
 let Game = require("../../models/game.js")
 
 
-const app = express()
 app.use(bodyParser.json())
 app.use(morgan('combined'))
 app.use(cors())
 
 const PORT = envVars["PORT"] || 8080
 
+// http.listen(PORT, () => {
+//   console.log(`Movie Name Game is ecstatic to host you on port ${PORT}`)
+// })
+
+
 let gamesInPlay = []
+
+app.get('/', function(req, res){
+  res.sendFile(path.resolve('../client', 'index.html'));
+});
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
+
+http.listen(PORT, () => {
+  console.log(`Movie Name Game is ecstatic to host you on port ${PORT}`)
+})
 
 app.post("/start-game", (req, res) => {
   data = req.body
@@ -46,9 +66,10 @@ app.post("/play-turn", (req, res) => {
     }
     res.status(200).send(`${message}`)
   })
-
 })
 
-app.listen(PORT, () => {
-  console.log(`Movie Name Game is ecstatic to host you on port ${PORT}`)
-})
+// io.on('connection', socket => {
+//   console.log('A user connected! I hope they are of strong and admirable character.')
+// })
+
+
